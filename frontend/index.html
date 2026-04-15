@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshCart AI - Fresh Groceries Delivered</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesomeesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Offers Bar -->
+    <div class="offers-bar">
+        <div class="offers-content">
+            <span class="offer-icon"><i class="fas fa-truck-fast"></i></span>
+            <span class="offer-text">FREE Delivery on first order! Use code: <strong>FRESH20</strong></span>
+            <span class="offer-divider">|</span>
+            <span class="offer-text">Flat 15% OFF on Vegetables</span>
+            <span class="offer-divider">|</span>
+            <span class="offer-text"><i class="fas fa-clock"></i> Delivery in 25-35 mins</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-leaf"></i>
+            Fresh<span>Cart</span>AI
+        </a>
+        
+        <div class="location-selector" onclick="showToast('Location feature coming soon!', 'info')">
+            <i class="fas fa-location-dot"></i>
+            <div class="location-text">
+                <span class="deliver-to">Deliver to</span>
+                <span class="address">Mumbai, India</span>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search for vegetables, fruits, nuts...">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#" class="nav-link" onclick="showOffers(); return false;">
+                <i class="fas fa-tags"></i> <span>Offers</span>
+            </a>
+            <a href="#orders" class="nav-link" onclick="showOrders(); return false;">
+                <i class="fas fa-receipt"></i> <span>My Orders</span>
+            </a>
+            <a href="#subscriptions" class="nav-link" onclick="showMySubscriptions(); return false;">
+                <i class="fas fa-sync-alt"></i> <span>Subscriptions</span>
+            </a>
+            <div class="notification-wrapper" id="notificationWrapper">
+                <button class="notification-btn" onclick="toggleNotifications(event)">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count" id="notificationCount" style="display: none;">0</span>
+                </button>
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="notification-header">
+                        <h4>Notifications</h4>
+                        <button class="mark-all-read" onclick="markAllNotificationsRead()">Mark all read</button>
+                    </div>
+                    <div class="notification-list" id="notificationList">
+                        <div class="notification-empty">
+                            <i class="fas fa-bell-slash"></i>
+                            <p>No notifications yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="cart-btn" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i> <span>Cart</span>
+                <span class="badge" id="cartBadge">0</span>
+            </button>
+            <div id="userArea">
+                <a href="#" class="nav-link" onclick="showLogin(); return false;">
+                    <i class="fas fa-user"></i> <span>Login</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="floating-element elem-1"><i class="fas fa-carrot"></i></div>
+            <div class="floating-element elem-2"><i class="fas fa-apple-whole"></i></div>
+            <div class="floating-element elem-3"><i class="fas fa-lemon"></i></div>
+            <div class="floating-element elem-4"><i class="fas fa-pepper-hot"></i></div>
+            <div class="floating-element elem-5"><i class="fas fa-seedling"></i></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-shield-check"></i> 100% Fresh Guaranteed
+            </div>
+            <h1>Fresh Groceries,<br><span>Delivered Fast</span></h1>
+            <p>Premium vegetables, fruits & nuts at your doorstep. Subscribe & save up to 20%!</p>
+            <div class="hero-search">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="heroSearchInput" placeholder="Search for your favorites...">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
+            <div class="hero-btns">
+                <a href="#products" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Shop Now
+                </a>
+                <a href="#" class="btn btn-outline" onclick="showSubscriptions(); return false;">
+                    <i class="fas fa-crown"></i> View Pro Plans
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&h=400&fit=crop" alt="Fresh Groceries">
+        </div>
+    </section>
+
+    <!-- Quick Filters -->
+    <div class="quick-filters">
+        <button class="quick-filter active" data-filter="all">
+            <i class="fas fa-border-all"></i> All
+        </button>
+        <button class="quick-filter" data-filter="vegetables">
+            <span class="veg-dot"></span> Veg
+        </button>
+        <button class="quick-filter" data-filter="fruits">
+            <i class="fas fa-apple-whole"></i> Fruits
+        </button>
+        <button class="quick-filter" data-filter="nuts">
+            <i class="fas fa-seedling"></i> Nuts
+        </button>
+        <button class="quick-filter" data-filter="under10">
+            <i class="fas fa-tag"></i> Under $10
+        </button>
+        <button class="quick-filter" data-filter="bestseller">
+            <i class="fas fa-star"></i> Bestsellers
+        </button>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+        <div class="trust-badge">
+            <div class="trust-icon"><i class="fas fa-shield-halved"></i></div>
+            <div class="trust-text">
+                <strong>Safe & Hygienic</strong>
+                <span>Sanitized delivery</span>
+            </div>
+        </div>
+        <div class="trust-badge">
+            <div class="trust-icon"><i class="fas fa-clock"></i></div>
+            <div class="trust-text">
+                <strong>Lightning Fast</strong>
+                <span>25-35 min delivery</span>
+            </div>
+        </div>
+        <div class="trust-badge">
+            <div class="trust-icon"><i class="fas fa-leaf"></i></div>
+            <div class="trust-text">
+                <strong>100% Fresh</strong>
+                <span>Quality guaranteed</span>
+            </div>
+        </div>
+        <div class="trust-badge">
+            <div class="trust-icon"><i class="fas fa-headset"></i></div>
+            <div class="trust-text">
+                <strong>24/7 Support</strong>
+                <span>Always here to help</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <section class="section" id="categories">
+        <div class="section-header">
+            <h2 class="section-title">What's on your mind?</h2>
+            <div class="section-nav">
+                <button class="nav-btn" onclick="scrollCategories(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn" onclick="scrollCategories(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="categories-scroll" id="categoriesScroll">
+            <div class="cat-card-large" onclick="filterProducts('vegetables')">
+                <div class="cat-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1518843875459-f738682238a6?w=200&h=200&fit=crop" alt="Vegetables">
+                </div>
+                <h3>Vegetables</h3>
+                <span class="cat-count">6 items</span>
+            </div>
+            <div class="cat-card-large" onclick="filterProducts('fruits')">
+                <div class="cat-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=200&h=200&fit=crop" alt="Fruits">
+                </div>
+                <h3>Fruits</h3>
+                <span class="cat-count">6 items</span>
+            </div>
+            <div class="cat-card-large" onclick="filterProducts('nuts')">
+                <div class="cat-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1536591375298-4db9441fd8c9?w=200&h=200&fit=crop" alt="Nuts">
+                </div>
+                <h3>Nuts & Dry Fruits</h3>
+                <span class="cat-count">4 items</span>
+            </div>
+            <div class="cat-card-large" onclick="filterProducts('all')">
+                <div class="cat-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=200&h=200&fit=crop" alt="All">
+                </div>
+                <h3>Combo Packs</h3>
+                <span class="cat-count">Coming Soon</span>
+            </div>
+            <div class="cat-card-large" onclick="showToast('Organic section coming soon!', 'info')">
+                <div class="cat-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=200&fit=crop" alt="Organic">
+                </div>
+                <h3>Organic</h3>
+                <span class="cat-count">Coming Soon</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="section" id="products">
+        <div class="section-header">
+            <h2 class="section-title" id="productTitle">All Products</h2>
+            <span class="product-count" id="productCount">16 items</span>
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+            <button class="filter-btn" onclick="filterProducts('vegetables')">Vegetables</button>
+            <button class="filter-btn" onclick="filterProducts('fruits')">Fruits</button>
+            <button class="filter-btn" onclick="filterProducts('nuts')">Nuts</button>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Plans Section -->
+    <section class="section subscriptions-section" id="subscriptions">
+        <div class="section-header centered">
+            <div class="pro-badge">
+                <i class="fas fa-crown"></i> FRESHCART PRO
+            </div>
+            <h2 class="section-title">Save More with Pro</h2>
+            <p class="section-subtitle">Get exclusive benefits on every order</p>
+        </div>
+        <div class="plans-grid">
+            <!-- Basic Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <span class="plan-icon"><i class="fas fa-leaf"></i></span>
+                    <span class="plan-name">Basic</span>
+                </div>
+                <div class="plan-price">
+                    <span class="price">$9</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="plan-tagline">Perfect for occasional shoppers</p>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Free delivery on orders above $50</li>
+                    <li><i class="fas fa-check"></i> 5% off on all orders</li>
+                    <li><i class="fas fa-check"></i> Priority customer support</li>
+                    <li><i class="fas fa-check"></i> Access to basic deals</li>
+                </ul>
+                <div class="plan-savings">
+                    <i class="fas fa-piggy-bank"></i> Save up to $15/month
+                </div>
+                <button class="plan-btn" onclick="subscribePlan('daily')">Get Started</button>
+            </div>
+
+            <!-- Pro Plan (Featured) -->
+            <div class="plan-card featured">
+                <div class="plan-glow"></div>
+                <div class="plan-badge">MOST POPULAR</div>
+                <div class="plan-header">
+                    <span class="plan-icon"><i class="fas fa-crown"></i></span>
+                    <span class="plan-name">Pro</span>
+                    <span class="plan-savings-badge">SAVE 20%</span>
+                </div>
+                <div class="plan-price">
+                    <span class="price">$19</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="plan-tagline">Best for regular families</p>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Unlimited free delivery</li>
+                    <li><i class="fas fa-check"></i> 15% off on all orders</li>
+                    <li><i class="fas fa-check"></i> Priority delivery (20 min)</li>
+                    <li><i class="fas fa-check"></i> Access to flash deals</li>
+                    <li><i class="fas fa-check"></i> Exclusive Pro-only items</li>
+                    <li><i class="fas fa-check"></i> Birthday special offer</li>
+                </ul>
+                <div class="plan-savings">
+                    <i class="fas fa-piggy-bank"></i> Save up to $45/month
+                </div>
+                <button class="plan-btn primary" onclick="subscribePlan('weekly')">
+                    <i class="fas fa-rocket"></i> Subscribe Now
+                </button>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="plan-card premium">
+                <div class="plan-header">
+                    <span class="plan-icon"><i class="fas fa-gem"></i></span>
+                    <span class="plan-name">Premium</span>
+                </div>
+                <div class="plan-price">
+                    <span class="price">$29</span>
+                    <span class="period">/month</span>
+                </div>
+                <p class="plan-tagline">For the ultimate grocery lover</p>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> Everything in Pro</li>
+                    <li><i class="fas fa-check"></i> 20% off on all orders</li>
+                    <li><i class="fas fa-check"></i> Express delivery (15 min)</li>
+                    <li><i class="fas fa-check"></i> Personal shopper assistant</li>
+                    <li><i class="fas fa-check"></i> Monthly freebie box</li>
+                    <li><i class="fas fa-check"></i> No minimum order</li>
+                </ul>
+                <div class="plan-savings">
+                    <i class="fas fa-piggy-bank"></i> Save up to $80/month
+                </div>
+                <button class="plan-btn" onclick="subscribePlan('monthly')">Go Premium</button>
+            </div>
+        </div>
+        <div class="plans-footer">
+            <p><i class="fas fa-info-circle"></i> Cancel anytime. No hidden charges.</p>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section why-section">
+        <h2 class="section-title centered">Why Choose FreshCart AI?</h2>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-farmer"></i></div>
+                <h3>Farm Fresh</h3>
+                <p>Direct from local farms to your table. No middlemen, just fresh produce.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-truck-fast"></i></div>
+                <h3>Lightning Delivery</h3>
+                <p>Get your groceries delivered in 25-35 minutes. We're that fast!</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-leaf"></i></div>
+                <h3>100% Organic</h3>
+                <p>All our products are certified organic. Safe for you and the planet.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+                <h3>Best Prices</h3>
+                <p>We beat market prices every day. Quality shouldn't cost more.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    Fresh<span>Cart</span>AI
+                </a>
+                <p>Premium groceries, delivered fast.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Refund Policy</a>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 FreshCart AI. All rights reserved.</p>
+            <p class="debug-hint" title="Press Ctrl+Shift+N to simulate a notification (when logged in)">💡 Tip: Press Ctrl+Shift+N to test notifications</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+            <button class="close-btn" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <div class="empty-cart">
+                <span class="empty-icon">🛒</span>
+                <p>Your cart is empty</p>
+                <span class="empty-sub">Add items to get started</span>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="promo-code">
+                <input type="text" placeholder="Apply promo code" id="promoInput">
+                <button onclick="applyPromo()">Apply</button>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span class="discount" id="deliveryFee">$2.99</span>
+                </div>
+                <div class="summary-row">
+                    <span>Discount</span>
+                    <span class="discount" id="discountAmount">-$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="placeOrder()">
+                <i class="fas fa-credit-card"></i> Proceed to Checkout
+            </button>
+            <p class="safe-delivery">
+                <i class="fas fa-shield-halved"></i> Safe & hygienic delivery
+            </p>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div class="modal-overlay" id="subModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3><i class="fas fa-crown"></i> FreshCart Pro Plans</h3>
+                <button class="close-btn" onclick="closeModal('subModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro">Choose the plan that fits your lifestyle and start saving today!</p>
+                <div class="modal-plans" id="modalPlansGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Login</h3>
+                <button class="close-btn" onclick="closeModal('loginModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" id="loginEmail" placeholder="demo@freshcart.ai" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <p class="demo-hint">
+                        Demo: <strong>demo@freshcart.ai</strong> / <strong>demo123</strong>
+                    </p>
+                    <p class="signup-link">
+                        Don't have an account? <a href="#" onclick="showRegister(); return false;">Sign Up</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Create Account</h3>
+                <button class="close-btn" onclick="closeModal('registerModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-input" id="registerName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" id="registerEmail" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-input" id="registerPhone" placeholder="+91 9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Address</label>
+                        <input type="text" class="form-input" id="registerAddress" placeholder="123 Main Street, Mumbai" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-input" id="registerPassword" placeholder="Create a password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-input" id="registerConfirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                    <p class="signup-link">
+                        Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div class="modal-overlay" id="accountModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> My Account</h3>
+                <button class="close-btn" onclick="closeModal('accountModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="account-profile">
+                    <div class="profile-avatar" id="profileAvatar">J</div>
+                    <div class="profile-info">
+                        <h4 id="profileName">John Doe</h4>
+                        <p id="profileEmail">john@example.com</p>
+                    </div>
+                </div>
+                <div class="account-menu">
+                    <a href="#" class="account-menu-item" onclick="showOrders(); closeModal('accountModal'); return false;">
+                        <i class="fas fa-shopping-bag"></i> My Orders
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="account-menu-item" onclick="showMySubscriptions(); closeModal('accountModal'); return false;">
+                        <i class="fas fa-sync-alt"></i> My Subscriptions
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="account-menu-item" onclick="showAddresses(); return false;">
+                        <i class="fas fa-map-marker-alt"></i> Saved Addresses
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <a href="#" class="account-menu-item" onclick="showEditProfile(); return false;">
+                        <i class="fas fa-edit"></i> Edit Profile
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+                <button class="btn btn-outline btn-block" onclick="handleLogout(); closeModal('accountModal');" style="margin-top: 20px;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Modal -->
+    <div class="modal-overlay" id="ordersModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-bag"></i> My Orders</h3>
+                <button class="close-btn" onclick="closeModal('ordersModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="orders-tabs">
+                    <button class="order-tab active" onclick="switchOrderTab('active')">Active</button>
+                    <button class="order-tab" onclick="switchOrderTab('past')">Past Orders</button>
+                </div>
+                <div id="ordersContent">
+                    <div class="orders-loading">
+                        <div class="spinner"></div>
+                        <p>Loading orders...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Subscriptions Modal -->
+    <div class="modal-overlay" id="mySubsModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3><i class="fas fa-sync-alt"></i> My Subscriptions</h3>
+                <button class="close-btn" onclick="closeModal('mySubsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="subscriptionsContent">
+                    <div class="subscriptions-loading">
+                        <div class="spinner"></div>
+                        <p>Loading subscriptions...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Tracking Modal -->
+    <div class="modal-overlay" id="trackModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3><i class="fas fa-truck"></i> Order Tracking</h3>
+                <button class="close-btn" onclick="closeModal('trackModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-info">
+                    <p>Order #<span id="trackOrderId">-</span></p>
+                    <p class="eta">Estimated Delivery: <strong id="etaTime">--</strong></p>
+                </div>
+                <div class="timeline" id="timeline"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offers Modal -->
+    <div class="modal-overlay" id="offersModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-tags"></i> Available Offers</h3>
+                <button class="close-btn" onclick="closeModal('offersModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-truck-fast"></i></div>
+                    <div class="offer-details">
+                        <h4>FREE Delivery</h4>
+                        <p>On your first order</p>
+                        <span class="offer-code">Code: FRESH20</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-percent"></i></div>
+                    <div class="offer-details">
+                        <h4>15% OFF on Vegetables</h4>
+                        <p>Use code VEGGIE15</p>
+                        <span class="offer-code">Code: VEGGIE15</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-icon"><i class="fas fa-crown"></i></div>
+                    <div class="offer-details">
+                        <h4>Pro Membership</h4>
+                        <p>Get 20% off + free delivery</p>
+                        <span class="offer-code">Start at $19/month</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Floating Cart Button (Mobile) -->
+    <button class="floating-cart-btn" onclick="toggleCart()" id="floatingCartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="floating-badge" id="floatingBadge">0</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>

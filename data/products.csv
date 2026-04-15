@@ -1,0 +1,17 @@
+id,name,category,price,unit,stock,description,image_url
+1,Organic Tomatoes,vegetables,3.99,kg,100,Farm fresh organic tomatoes,https://images.unsplash.com/photo-1546470427-227c7b3f8311?w=400
+2,Fresh Spinach,vegetables,2.49,bunch,80,Green leafy spinach,https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400
+3,Organic Carrots,vegetables,1.99,kg,120,Sweet organic carrots,https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400
+4,Fresh Broccoli,vegetables,2.99,kg,75,Green broccoli heads,https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400
+5,Crisp Cucumbers,vegetables,1.49,kg,90,Fresh crunchy cucumbers,https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400
+6,Bell Peppers,vegetables,3.49,kg,60,Colorful bell peppers,https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400
+7,Red Apples,fruits,4.99,kg,200,Crisp red apples,https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400
+8,Organic Bananas,fruits,1.99,dozen,300,Ripe organic bananas,https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400
+9,Fresh Oranges,fruits,3.99,kg,180,Juicy sweet oranges,https://images.unsplash.com/photo-1547514701-42782101795e?w=400
+10,Seedless Grapes,fruits,5.99,kg,120,Sweet seedless grapes,https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400
+11,Fresh Strawberries,fruits,6.99,box,90,Organic strawberries,https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400
+12,Sweet Mangoes,fruits,4.49,kg,100,Alphonso mangoes,https://images.unsplash.com/photo-1553279768-865429fa0078?w=400
+13,Organic Almonds,nuts,12.99,kg,60,Raw organic almonds,https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400
+14,Walnuts,nuts,14.99,kg,50,Fresh shelled walnuts,https://images.unsplash.com/photo-1599593752329-26b651e2efcc?w=400
+15,Roasted Cashews,nuts,15.99,kg,45,Premium roasted cashews,https://images.unsplash.com/photo-1630431341973-02e1b662ec35?w=400
+16,Salted Pistachios,nuts,13.99,kg,55,Roasted pistachios,https://images.unsplash.com/photo-1594942895212-a1b77f48ee92?w=400
