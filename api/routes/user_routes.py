@@ -11,15 +11,17 @@ import hashlib
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 # In-memory storage (shared with main.py)
-_users = {}
-_sessions = {}
-_next_user_id = 1
+user_store = {}
+sessions = {}
+next_user_id = 1
 
-
+def _hash_password(password: str) -> str:
+    """Hash password using SHA256"""
+    return hashlib.sha256(password.encode()).hexdigest()
 def init_demo_user():
     """Initialize demo user"""
-    global _next_user_id
-    _users[1] = {
+    global next_user_id
+    user_store[1] = {
         "id": 1,
         "name": "Demo User",
         "email": "demo@freshcart.ai",
@@ -28,12 +30,7 @@ def init_demo_user():
         "password": _hash_password("demo123"),
         "created_at": datetime.now()
     }
-    _next_user_id = 2
-
-
-def _hash_password(password: str) -> str:
-    """Hash password using SHA256"""
-    return hashlib.sha256(password.encode()).hexdigest()
+    next_user_id = 2  
 
 
 def get_current_user(token: str) -> Optional[dict]:

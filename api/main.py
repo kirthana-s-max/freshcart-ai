@@ -287,6 +287,14 @@ try:
 except:
     pass
 
+from agents.orchestrator import Orchestrator
+
+orch = Orchestrator()
+
+@app.get("/run/{endpoint}")
+def run(endpoint: str):
+    return orch.run_flow(endpoint, {})
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000) 
