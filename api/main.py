@@ -40,9 +40,9 @@ async def register(user: UserCreate, password: str = "freshcart123"):
             email=user.email,
             phone=user.phone,
             address=user.address,
-            password=password
-        )
-        return result
+            password=password  
+        ) 
+        return result 
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

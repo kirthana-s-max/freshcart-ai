@@ -567,6 +567,11 @@ class AgentOrchestrator:
         
         self.agents["RecommendationAgent"] = RecommendationAgent(product)
     
+    def initialize_test_agent(self):
+        """Initialize TestAgent separately (imported dynamically to avoid circular imports)"""
+        from .test_agent import TestAgent
+        self.agents["TestAgent"] = TestAgent()
+    
     def _parse_markdown(self):
         """Parse markdown to extract agent definitions and workflows"""
         if not self.agents_md_path.exists():
@@ -681,3 +686,9 @@ def get_notification_agent() -> NotificationAgent:
 
 def get_recommendation_agent() -> RecommendationAgent:
     return orchestrator.get_agent("RecommendationAgent")
+
+
+def get_test_agent():
+    """Get TestAgent instance"""
+    from .test_agent import TestAgent
+    return TestAgent()

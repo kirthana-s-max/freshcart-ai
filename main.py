@@ -5,8 +5,9 @@ FastAPI application for subscription-based grocery delivery
 
 from fastapi import FastAPI, HTTPException, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field 
 from typing import Optional, List
+from api.models import RegisterRequest 
 from datetime import datetime, timedelta
 import uuid
 import hashlib
@@ -369,22 +370,22 @@ notifications = NotificationStore()
 # ==================== PYDANTIC MODELS ====================
 
 class LoginRequest(BaseModel):
-    email: str
-    password: str
+    email: str = Field(..., min_length=1)
+    password: str 
 
 
 class RegisterRequest(BaseModel):
-    name: str
+    name: str = Field(..., min_length=1) 
     email: str
     phone: str
     address: str
-    password: str = "password123"
+    password: str = "password123" 
 
 
 class SubscriptionRequest(BaseModel):
     product_id: int
     frequency: str
-    quantity: int = 1
+    quantity: int = Field(1, ge=1) 
 
 
 class OrderRequest(BaseModel):
@@ -405,7 +406,7 @@ async def register(data: RegisterRequest):
             phone=data.phone,
             address=data.address,
             password=data.password
-        )
+        )  
         token = str(uuid.uuid4())
         users._sessions[token] = user["id"]
         return {"user": user, "token": token}
@@ -452,10 +453,14 @@ async def get_product(product_id: int):
     return product
 
 
-@app.get("/api/products/category/{category}", tags=["Products"])
+@app.get("/api/products/category/{category}", tags=["Products"]) 
 async def get_products_by_category(category: str):
     """Get products by category"""
-    return products.get_by_category(category)
+    return products.get_by_category(category) 
+
+@app.get("/api/products/category/", tags=["Products"])
+async def get_products_by_empty_category():
+    return products.get_all() 
 
 
 @app.get("/api/search", tags=["Products"])
@@ -473,7 +478,10 @@ async def get_categories():
 # ==================== CART ROUTES ====================
 
 @app.post("/api/cart/add", tags=["Cart"])
-async def add_to_cart(product_id: int, quantity: int = 1):
+async def add_to_cart(
+    product_id: int,
+    quantity: int = Query(1, ge=0)
+): 
     """Add item to cart (mock - returns product info)"""
     product = products.get_by_id(product_id)
     if not product:

@@ -3,6 +3,7 @@ FreshCart AI - Models Module
 """
 
 from pydantic import BaseModel
+from pydantic import Field 
 from typing import Optional, List
 from datetime import datetime
 from enum import Enum
@@ -97,6 +98,10 @@ class Subscription(BaseModel):
     created_at: str
 
 
+class SubscriptionRequest(BaseModel):
+    product_id: int
+    frequency: str
+    quantity: int = Field(..., ge=1) 
 # ==================== ORDER MODELS ====================
 
 class OrderItem(BaseModel):
@@ -135,10 +140,11 @@ class LoginRequest(BaseModel):
 
 
 class RegisterRequest(BaseModel):
-    name: str
+    name: str = Field(..., min_length=1) 
     email: str
     phone: str
     address: str
+    password: str  
 
 
 class AuthResponse(BaseModel):

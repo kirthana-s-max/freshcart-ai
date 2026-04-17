@@ -2,7 +2,8 @@
 User Routes - Authentication and User Management
 """
 
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Body 
+from fastapi import Header 
 from typing import Optional
 from datetime import datetime
 import uuid
@@ -54,12 +55,23 @@ def get_current_user(token: str) -> Optional[dict]:
 init_demo_user()
 
 
-@router.post("/register")
-async def register(name: str, email: str, phone: str, address: str, password: str = "password123"):
+@router.post("/api/auth/register") 
+async def register(
+    name: str = Body(...),
+    email: str = Body(...),
+    phone: str = Body(...),
+    address: str = Body(...),
+    password: str = Body("password123")
+):
     """Register a new user"""
-    global _next_user_id
+    if not name or not name.strip():
+        return {
+        "success": False,
+        "message": "Name cannot be empty"
+    }
+    global _next_user_id 
     
-    if any(u["email"] == email for u in _users.values()):
+    if any(u["email"] == email for u in user_store.values()):
         raise HTTPException(status_code=400, detail="Email already registered")
     
     user = {
@@ -72,22 +84,19 @@ async def register(name: str, email: str, phone: str, address: str, password: st
         "created_at": datetime.now()
     }
     
-    _users[_next_user_id] = user
+    user_store[_next_user_id] = user 
+    _next_user_id += 1 
     
-    token = str(uuid.uuid4())
-    _sessions[token] = _next_user_id
-    _next_user_id += 1
-    
-    user_data = {
-        "id": user["id"],
-        "name": user["name"],
-        "email": user["email"],
-        "phone": user["phone"],
-        "address": user["address"],
-        "created_at": user["created_at"].isoformat()
-    }
-    
-    return {"user": user_data, "token": token}
+    return {
+        "success": True,
+        "user": {
+            "id": user["id"],
+            "name": user["name"],
+            "email": user["email"],
+            "phone": user["phone"],
+            "address": user["address"]
+        }
+    }  
 
 
 @router.post("/login")

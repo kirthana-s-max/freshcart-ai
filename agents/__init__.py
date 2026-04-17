@@ -24,6 +24,8 @@ from .orchestrator import (
     AgentDefinition,
 )
 
+from .test_agent import TestAgent, get_test_agent
+
 __all__ = [
     "AgentOrchestrator",
     "orchestrator",
@@ -41,4 +43,6 @@ __all__ = [
     "RecommendationAgent",
     "BaseAgent",
     "AgentDefinition",
+    "TestAgent",
+    "get_test_agent",
 ]

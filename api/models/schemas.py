@@ -27,7 +27,7 @@ class UserBase(BaseModel):
     name: str
     email: str
     phone: str
-    address: str
+    address: str 
 
 
 class UserCreate(UserBase):
