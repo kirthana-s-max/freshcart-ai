@@ -20,7 +20,16 @@
             <span class="offer-text"><i class="fas fa-clock"></i> Delivery in 25-35 mins</span>
         </div>
     </div>
+<h1 style="background:red;color:white;padding:10px;">
+    TEST RECOMMENDATION SECTION
+</h1>
 
+<div id="recommendation-section" style="padding:30px;background:#fff3e8;border:2px solid orange;margin-bottom:30px;">
+    <h2>Recommended Products</h2>
+    <ul id="recommendations">
+        <li>Loading recommendations...</li>
+    </ul>
+</div> 
     <!-- Navigation -->
     <nav class="navbar">
         <a href="#" class="logo">
@@ -176,7 +185,7 @@
     <!-- Categories -->
     <section class="section" id="categories">
         <div class="section-header">
-            <h2 class="section-title">What's on your mind?</h2>
+            <h2 class="section-title">What's on your mind?</h2> 
             <div class="section-nav">
                 <button class="nav-btn" onclick="scrollCategories(-1)"><i class="fas fa-chevron-left"></i></button>
                 <button class="nav-btn" onclick="scrollCategories(1)"><i class="fas fa-chevron-right"></i></button>
@@ -223,11 +232,21 @@
 
     <!-- Products -->
     <section class="section" id="products">
-        <div class="section-header">
-            <h2 class="section-title" id="productTitle">All Products</h2>
-            <span class="product-count" id="productCount">16 items</span>
-        </div>
-        <div class="filters">
+
+        <div class="section-header" style="display:block !important;">
+
+        <div id="recommendation-section" style="padding: 30px ; background: #fff3e8; border: 2px solid orange; margin-bottom: 30px;">
+            <h2>Recommended Products</h2>
+            <ul id="recommendations">
+                <li>Loading recommendations...</li>
+            </ul>
+        </div> 
+
+        <h2 class="section-title" id="productTitle">All Products</h2>
+        <span class="product-count" id="productCount">16 items</span>
+
+</div> 
+        <div class="filters"> 
             <button class="filter-btn active" onclick="filterProducts('all')">All</button>
             <button class="filter-btn" onclick="filterProducts('vegetables')">Vegetables</button>
             <button class="filter-btn" onclick="filterProducts('fruits')">Fruits</button>

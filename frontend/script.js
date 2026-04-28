@@ -1210,3 +1210,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+// Existing code above...
+
+fetch("http://127.0.0.1:8000/recommend")
+  .then(response => response.json())
+  .then(data => {
+      const recommendationBox = document.getElementById("recommendations");
+
+      recommendationBox.innerHTML = "";
+
+      data.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          recommendationBox.appendChild(li);
+      });
+  }); 

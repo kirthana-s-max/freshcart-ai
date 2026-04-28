@@ -11,7 +11,7 @@ from api.models.schemas import (
     Order, OrderCreate, CartResponse, CartItem
 )
 from api.routes.user_routes import user_store
-from api.routes.product_routes import product_store, subscription_store, order_store
+from api.routes.product_routes import router 
 
 app = FastAPI(title="FreshCart AI", version="1.0.0", description="Subscription-based grocery delivery platform")
 

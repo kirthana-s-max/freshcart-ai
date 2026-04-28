@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field 
 from typing import Optional, List
 from api.models import RegisterRequest 
+from agents.recommendation import RecommendationAgent 
 from datetime import datetime, timedelta
 import uuid
 import hashlib
@@ -20,6 +21,7 @@ app = FastAPI(
     version="1.0.0",
     description="Subscription-based grocery delivery platform"
 )
+recommendation_agent = RecommendationAgent() 
 
 # CORS middleware
 app.add_middleware(
@@ -30,6 +32,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/recommend")
+def recommend():
+    return recommendation_agent.recommend_products()  
 
 # ==================== DATA STORES ====================
 

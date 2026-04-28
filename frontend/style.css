@@ -2776,3 +2776,15 @@ img {
 @media (max-width: 768px) {
     .floating-cart-btn { display: flex; }
 }
+
+#recommendation-section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff3e8;
+    border: 2px solid orange;
+    padding: 20px;
+    margin-bottom: 30px;
+} 
